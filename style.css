@@ -228,3 +228,49 @@ section {
 #header.active {
   display: none;
 }
+
+.laptop-animation {
+  margin-top: 20px;
+}
+
+.laptop {
+  width: 300px;
+  height: 200px;
+  background-color: #333;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.laptop .screen {
+  width: 100%;
+  height: 70%;
+  background-color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0f0;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+}
+
+.laptop .keyboard {
+  width: 100%;
+  height: 30%;
+  background-color: #444;
+  position: absolute;
+  bottom: 0;
+}
+
+@keyframes typing {
+  0% { width: 0; }
+  100% { width: 100%; }
+}
+
+.code p {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid #0f0;
+  animation: typing 3s steps(20) infinite;
+}
