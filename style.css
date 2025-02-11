@@ -1,9 +1,10 @@
 :root {
-  --color-bg: #040b14;
-  --color-text: #fff;
-  --color-text-secondary: #a8a9b4;
-  --color-primary: #149ddd;
-  --color-link-hover: #37b3ed;
+  --sidebar-bg: #040b14;
+  --sidebar-width: 300px;
+  --text-primary: #fff;
+  --text-secondary: #a8a9b4;
+  --accent-color: #149ddd;
+  --icon-bg: #212431;
 }
 
 * {
@@ -13,122 +14,119 @@
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
-  background-color: #f5f8fd;
-  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #f5f8fd;
+  color: var(--text-primary);
+  min-height: 100vh;
 }
 
-#header {
+#sidebar {
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
-  width: 300px;
-  padding: 0 15px;
-  background: var(--color-bg);
-  overflow-y: auto;
-  z-index: 100;
-  transition: all 0.5s ease-in-out;
+  width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  padding: 20px;
+  z-index: 999;
+  transition: all 0.3s ease-in-out;
 }
 
 .profile {
-  padding: 20px 0;
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .profile h1 {
   font-size: 24px;
-  margin: 15px 0 0 0;
-  font-family: "Raleway", sans-serif;
-  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  color: var(--text-primary);
+  margin-bottom: 20px;
 }
 
-.profile .social-links {
-  margin-top: 15px;
+.social-links {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-.profile .social-links a {
+.social-links a {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
-  background: #212431;
+  background: var(--icon-bg);
   border-radius: 50%;
-  color: var(--color-text);
-  transition: all 0.3s ease;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: 0.3s;
 }
 
-.profile .social-links a:hover {
-  background: var(--color-primary);
+.social-links a:hover {
+  background: var(--accent-color);
 }
 
 .nav-menu {
-  padding: 30px 0;
+  padding: 30px 0 0 0;
 }
 
-.nav-menu ul {
-  list-style: none;
-  padding: 0;
-}
-
-.nav-menu .nav-link {
+.nav-menu a {
   display: flex;
   align-items: center;
+  color: var(--text-secondary);
   padding: 12px 15px;
   margin-bottom: 8px;
-  color: var(--color-text-secondary);
+  transition: 0.3s;
   text-decoration: none;
-  transition: all 0.3s ease;
+  font-size: 15px;
 }
 
-.nav-menu .nav-link svg {
-  margin-right: 10px;
+.nav-menu a i {
+  font-size: 24px;
+  padding-right: 8px;
 }
 
-.nav-menu .nav-link:hover,
-.nav-menu .nav-link.active {
-  color: var(--color-text);
+.nav-menu a:hover,
+.nav-menu a.active {
+  color: var(--text-primary);
   background: rgba(255, 255, 255, 0.05);
 }
 
-.nav-menu .nav-link:hover svg,
-.nav-menu .nav-link.active svg {
-  color: var(--color-primary);
-}
-
-.mobile-nav-toggle {
-  position: fixed;
-  right: 15px;
-  top: 15px;
-  z-index: 200;
-  border: 0;
-  background: var(--color-bg);
-  color: var(--color-text);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.nav-menu a:hover i,
+.nav-menu a.active i {
+  color: var(--accent-color);
 }
 
 #main {
-  margin-left: 300px;
-  min-height: 100vh;
+  margin-left: var(--sidebar-width);
+  padding: 20px;
 }
 
+#mobile-nav-toggle {
+  display: none;
+  position: fixed;
+  right: 15px;
+  top: 15px;
+  z-index: 9998;
+  border: 0;
+  background: var(--accent-color);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Mobile styles */
 @media (max-width: 1199px) {
-  #header {
+  #sidebar {
     left: -300px;
   }
 
-  #header.mobile-nav-active {
+  #sidebar.active {
     left: 0;
   }
 
@@ -136,16 +134,20 @@ body {
     margin-left: 0;
   }
 
-  .mobile-nav-toggle {
-    display: flex;
+  #mobile-nav-toggle {
+    display: block;
+  }
+
+  body.mobile-nav-active #sidebar {
+    left: 0;
   }
 
   body.mobile-nav-active #main {
-    margin-left: 300px;
+    margin-left: var(--sidebar-width);
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   body.mobile-nav-active #main {
     margin-left: 0;
   }
