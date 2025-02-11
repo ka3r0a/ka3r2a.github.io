@@ -1,6 +1,15 @@
-import Typed from "typed.js"
+// Import AOS library.  Make sure you have included the AOS library in your HTML file.  For example:  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+import AOS from "aos"
 
 document.addEventListener("DOMContentLoaded", () => {
+  // AOS initialization
+  AOS.init({
+    duration: 1000,
+    easing: "ease-in-out",
+    once: true,
+    mirror: false,
+  })
+
   // Typed.js initialization
   new Typed(".typed", {
     strings: [
@@ -46,5 +55,45 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     })
   })
+
+  // Skills animation
+  const skillsSection = document.querySelector(".skills")
+  if (skillsSection) {
+    const progressBars = skillsSection.querySelectorAll(".progress-bar")
+    const animateProgress = () => {
+      progressBars.forEach((bar) => {
+        const value = bar.getAttribute("aria-valuenow")
+        bar.style.width = `${value}%`
+      })
+    }
+    window.addEventListener("scroll", () => {
+      const sectionPos = skillsSection.getBoundingClientRect().top
+      const screenPos = window.innerHeight / 2
+      if (sectionPos < screenPos) {
+        animateProgress()
+      }
+    })
+  }
+
+  // Back to top button
+  const backtotop = document.querySelector(".back-to-top")
+  if (backtotop) {
+    const toggleBacktotop = () => {
+      if (window.scrollY > 100) {
+        backtotop.classList.add("active")
+      } else {
+        backtotop.classList.remove("active")
+      }
+    }
+    window.addEventListener("load", toggleBacktotop)
+    document.addEventListener("scroll", toggleBacktotop)
+    backtotop.addEventListener("click", (e) => {
+      e.preventDefault()
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      })
+    })
+  }
 })
 
