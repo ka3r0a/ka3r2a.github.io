@@ -1,5 +1,6 @@
 // Import AOS library.  Make sure you have included the AOS library in your HTML file.  For example:  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 import AOS from "aos"
+import Typed from "typed.js" // Import Typed.js
 
 document.addEventListener("DOMContentLoaded", () => {
   // AOS initialization
@@ -28,17 +29,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Mobile nav toggle
   const mobileNavToggle = document.querySelector(".mobile-nav-toggle")
+  const body = document.querySelector("body")
   const header = document.querySelector("#header")
   const main = document.querySelector("#main")
 
   if (mobileNavToggle) {
     mobileNavToggle.addEventListener("click", function (e) {
-      header.classList.toggle("mobile-nav-active")
+      body.classList.toggle("mobile-nav-active")
       this.classList.toggle("bi-list")
       this.classList.toggle("bi-x")
-      main.classList.toggle("mobile-nav-active")
     })
   }
+
+  // اضافه کردن قابلیت بستن منو با کلیک خارج از آن
+  document.addEventListener("click", (e) => {
+    if (body.classList.contains("mobile-nav-active") && !header.contains(e.target) && e.target !== mobileNavToggle) {
+      body.classList.remove("mobile-nav-active")
+      mobileNavToggle.classList.add("bi-list")
+      mobileNavToggle.classList.remove("bi-x")
+    }
+  })
 
   // Smooth scroll for navigation
   const navLinks = document.querySelectorAll(".nav-menu a")
