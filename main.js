@@ -1,37 +1,99 @@
+// Import AOS library.  Make sure you have included the AOS library in your HTML file.  For example:  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+import AOS from "aos"
+
 document.addEventListener("DOMContentLoaded", () => {
-  const mobileNavToggle = document.getElementById("mobile-nav-toggle")
-  const body = document.body
-  const sidebar = document.getElementById("sidebar")
-
-  // Toggle mobile navigation
-  mobileNavToggle.addEventListener("click", () => {
-    body.classList.toggle("mobile-nav-active")
-    mobileNavToggle.querySelector("i").classList.toggle("fa-bars")
-    mobileNavToggle.querySelector("i").classList.toggle("fa-times")
+  // AOS initialization
+  AOS.init({
+    duration: 1000,
+    easing: "ease-in-out",
+    once: true,
+    mirror: false,
   })
 
-  // Close mobile nav when clicking outside
-  document.addEventListener("click", (e) => {
-    if (body.classList.contains("mobile-nav-active") && !sidebar.contains(e.target) && e.target !== mobileNavToggle) {
-      body.classList.remove("mobile-nav-active")
-      mobileNavToggle.querySelector("i").classList.add("fa-bars")
-      mobileNavToggle.querySelector("i").classList.remove("fa-times")
-    }
+  // Typed.js initialization
+  new Typed(".typed", {
+    strings: [
+      "Mathematics Student",
+      "Photographer",
+      "Programmer",
+      "Tech Enthusiast",
+      "Problem Solver",
+      "Web Developer",
+    ],
+    loop: true,
+    typeSpeed: 100,
+    backSpeed: 50,
+    backDelay: 2000,
   })
 
-  // Handle navigation active states
+  // Mobile nav toggle
+  const mobileNavToggle = document.querySelector(".mobile-nav-toggle")
+  const header = document.querySelector("#header")
+  const main = document.querySelector("#main")
+
+  if (mobileNavToggle) {
+    mobileNavToggle.addEventListener("click", function (e) {
+      header.classList.toggle("mobile-nav-active")
+      this.classList.toggle("bi-list")
+      this.classList.toggle("bi-x")
+      main.classList.toggle("mobile-nav-active")
+    })
+  }
+
+  // Smooth scroll for navigation
   const navLinks = document.querySelectorAll(".nav-menu a")
   navLinks.forEach((link) => {
-    link.addEventListener("click", function () {
-      navLinks.forEach((l) => l.classList.remove("active"))
-      this.classList.add("active")
-
-      if (window.innerWidth < 1200) {
-        body.classList.remove("mobile-nav-active")
-        mobileNavToggle.querySelector("i").classList.add("fa-bars")
-        mobileNavToggle.querySelector("i").classList.remove("fa-times")
+    link.addEventListener("click", function (e) {
+      e.preventDefault()
+      const targetId = this.getAttribute("href").substring(1)
+      const targetElement = document.getElementById(targetId)
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop - 100,
+          behavior: "smooth",
+        })
       }
     })
   })
+
+  // Skills animation
+  const skillsSection = document.querySelector(".skills")
+  if (skillsSection) {
+    const progressBars = skillsSection.querySelectorAll(".progress-bar")
+    const animateProgress = () => {
+      progressBars.forEach((bar) => {
+        const value = bar.getAttribute("aria-valuenow")
+        bar.style.width = `${value}%`
+      })
+    }
+    window.addEventListener("scroll", () => {
+      const sectionPos = skillsSection.getBoundingClientRect().top
+      const screenPos = window.innerHeight / 2
+      if (sectionPos < screenPos) {
+        animateProgress()
+      }
+    })
+  }
+
+  // Back to top button
+  const backtotop = document.querySelector(".back-to-top")
+  if (backtotop) {
+    const toggleBacktotop = () => {
+      if (window.scrollY > 100) {
+        backtotop.classList.add("active")
+      } else {
+        backtotop.classList.remove("active")
+      }
+    }
+    window.addEventListener("load", toggleBacktotop)
+    document.addEventListener("scroll", toggleBacktotop)
+    backtotop.addEventListener("click", (e) => {
+      e.preventDefault()
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      })
+    })
+  }
 })
 
