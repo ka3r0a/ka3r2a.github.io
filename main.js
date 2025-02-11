@@ -17,6 +17,30 @@ document.addEventListener("DOMContentLoaded", () => {
     backDelay: 2000,
   })
 
+  document.addEventListener("DOMContentLoaded", () => {
+    // ...existing code...
+  
+    // Sidebar toggle
+    const toggleSidebarButton = document.getElementById('toggle-sidebar');
+    const sidebar = document.getElementById('header');
+  
+    if (toggleSidebarButton) {
+      toggleSidebarButton.addEventListener('click', function () {
+        sidebar.classList.toggle('active');
+      });
+    }
+  
+    // Close sidebar after clicking on a nav link
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach((link) => {
+      link.addEventListener('click', function () {
+        sidebar.classList.remove('active');
+      });
+    });
+  
+    // ...existing code...
+  });
+  
   // Mobile nav toggle
   const mobileNavToggle = document.querySelector(".mobile-nav-toggle")
   const header = document.querySelector("#header")
@@ -48,18 +72,3 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 })
 
-document.addEventListener("DOMContentLoaded", () => {
-  // ...existing code...
-
-  // Sidebar toggle
-  const toggleSidebarButton = document.getElementById('toggle-sidebar');
-  const sidebar = document.getElementById('header');
-
-  if (toggleSidebarButton) {
-    toggleSidebarButton.addEventListener('click', function () {
-      sidebar.classList.toggle('active');
-    });
-  }
-
-  // ...existing code...
-});
