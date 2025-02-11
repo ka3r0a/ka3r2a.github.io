@@ -1,38 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const mobileNavToggle = document.querySelector(".mobile-nav-toggle")
-  const body = document.querySelector("body")
-  const header = document.querySelector("#header")
+  const mobileNavToggle = document.getElementById("mobile-nav-toggle")
+  const body = document.body
+  const sidebar = document.getElementById("sidebar")
 
-  if (mobileNavToggle) {
-    mobileNavToggle.addEventListener("click", (e) => {
-      e.preventDefault()
-      body.classList.toggle("mobile-nav-active")
-      header.classList.toggle("mobile-nav-active")
-    })
-  }
+  // Toggle mobile navigation
+  mobileNavToggle.addEventListener("click", () => {
+    body.classList.toggle("mobile-nav-active")
+    mobileNavToggle.querySelector("i").classList.toggle("fa-bars")
+    mobileNavToggle.querySelector("i").classList.toggle("fa-times")
+  })
 
   // Close mobile nav when clicking outside
   document.addEventListener("click", (e) => {
-    if (!header.contains(e.target) && !mobileNavToggle.contains(e.target)) {
+    if (body.classList.contains("mobile-nav-active") && !sidebar.contains(e.target) && e.target !== mobileNavToggle) {
       body.classList.remove("mobile-nav-active")
-      header.classList.remove("mobile-nav-active")
+      mobileNavToggle.querySelector("i").classList.add("fa-bars")
+      mobileNavToggle.querySelector("i").classList.remove("fa-times")
     }
   })
 
-  // Active link handling
-  const navLinks = document.querySelectorAll(".nav-link")
+  // Handle navigation active states
+  const navLinks = document.querySelectorAll(".nav-menu a")
   navLinks.forEach((link) => {
-    link.addEventListener("click", function (e) {
+    link.addEventListener("click", function () {
       navLinks.forEach((l) => l.classList.remove("active"))
       this.classList.add("active")
 
-      // Close mobile nav on link click
       if (window.innerWidth < 1200) {
         body.classList.remove("mobile-nav-active")
-        header.classList.remove("mobile-nav-active")
+        mobileNavToggle.querySelector("i").classList.add("fa-bars")
+        mobileNavToggle.querySelector("i").classList.remove("fa-times")
       }
     })
   })
 })
-
 
