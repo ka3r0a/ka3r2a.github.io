@@ -1,111 +1,172 @@
-import Typed from "typed.js"
-
-document.addEventListener("DOMContentLoaded", () => {
-  // Typed.js initialization
-  new Typed(".typed", {
-    strings: [
-      "Mathematics Student",
-      "Photographer",
-      "Programmer",
-      "Tech Enthusiast",
-      "Problem Solver",
-      "Web Developer",
-    ],
-    loop: true,
-    typeSpeed: 100,
-    backSpeed: 50,
-    backDelay: 2000,
-  })
-
-  // Sidebar toggle
-  const toggleSidebarButton = document.getElementById("toggle-sidebar")
-  const sidebar = document.getElementById("header")
-
-  if (toggleSidebarButton) {
-    toggleSidebarButton.addEventListener("click", () => {
-      sidebar.classList.toggle("active")
-    })
+;(() => {
+  /**
+   * Easy selector helper function
+   */
+  const select = (el, all = false) => {
+    el = el.trim()
+    if (all) {
+      return [...document.querySelectorAll(el)]
+    } else {
+      return document.querySelector(el)
+    }
   }
 
-  // Mobile nav toggle
-  const mobileNavToggle = document.querySelector(".mobile-nav-toggle")
-  const body = document.querySelector("body")
-  const header = document.querySelector("#header")
-  const main = document.querySelector("#main")
-
-  if (mobileNavToggle) {
-    mobileNavToggle.addEventListener("click", function (e) {
-      body.classList.toggle("mobile-nav-active")
-      this.classList.toggle("bi-list")
-      this.classList.toggle("bi-x")
-    })
-  }
-
-  // Close sidebar after clicking on a nav link or outside the sidebar
-  const navLinks = document.querySelectorAll(".nav-menu a")
-  navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      body.classList.remove("mobile-nav-active")
-      if (mobileNavToggle) {
-        mobileNavToggle.classList.add("bi-list")
-        mobileNavToggle.classList.remove("bi-x")
-      }
-    })
-  })
-
-  // Close mobile nav when clicking outside
-  document.addEventListener("click", (e) => {
-    if (body.classList.contains("mobile-nav-active") && !header.contains(e.target) && e.target !== mobileNavToggle) {
-      body.classList.remove("mobile-nav-active")
-      if (mobileNavToggle) {
-        mobileNavToggle.classList.add("bi-list")
-        mobileNavToggle.classList.remove("bi-x")
+  /**
+   * Easy event listener function
+   */
+  const on = (type, el, listener, all = false) => {
+    const selectEl = select(el, all)
+    if (selectEl) {
+      if (all) {
+        selectEl.forEach((e) => e.addEventListener(type, listener))
+      } else {
+        selectEl.addEventListener(type, listener)
       }
     }
-  })
+  }
 
-  // Smooth scroll for navigation
-  navLinks.forEach((link) => {
-    link.addEventListener("click", function (e) {
-      e.preventDefault()
-      const targetId = this.getAttribute("href").substring(1)
-      const targetElement = document.getElementById(targetId)
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop - 100,
-          behavior: "smooth",
-        })
+  /**
+   * Easy on scroll event listener
+   */
+  const onscroll = (el, listener) => {
+    el.addEventListener("scroll", listener)
+  }
+
+  /**
+   * Navbar links active state on scroll
+   */
+  const navbarlinks = select("#navbar .scrollto", true)
+  const navbarlinksActive = () => {
+    const position = window.scrollY + 200
+    navbarlinks.forEach((navbarlink) => {
+      if (!navbarlink.hash) return
+      const section = select(navbarlink.hash)
+      if (!section) return
+      if (position >= section.offsetTop && position <= section.offsetTop + section.offsetHeight) {
+        navbarlink.classList.add("active")
+      } else {
+        navbarlink.classList.remove("active")
       }
     })
+  }
+  window.addEventListener("load", navbarlinksActive)
+  onscroll(document, navbarlinksActive)
+
+  /**
+   * Scrolls to an element with header offset
+   */
+  const scrollto = (el) => {
+    const elementPos = select(el).offsetTop
+    window.scrollTo({
+      top: elementPos,
+      behavior: "smooth",
+    })
+  }
+
+  /**
+   * Back to top button
+   */
+  const backtotop = select(".back-to-top")
+  if (backtotop) {
+    const toggleBacktotop = () => {
+      if (window.scrollY > 100) {
+        backtotop.classList.add("active")
+      } else {
+        backtotop.classList.remove("active")
+      }
+    }
+    window.addEventListener("load", toggleBacktotop)
+    onscroll(document, toggleBacktotop)
+  }
+
+  /**
+   * Mobile nav toggle
+   */
+  on("click", ".mobile-nav-toggle", function (e) {
+    select("body").classList.toggle("mobile-nav-active")
+    this.classList.toggle("bi-list")
+    this.classList.toggle("bi-x")
   })
 
-  // Skills animation
-  const skillsSection = document.querySelector(".skills")
-  if (skillsSection) {
-    const progressBars = skillsSection.querySelectorAll(".progress-bar")
-    const animateProgress = (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const progressBar = entry.target
-          const value = progressBar.getAttribute("aria-valuenow")
-          progressBar.style.width = "0%"
-          progressBar.offsetWidth // Force a reflow
-          setTimeout(() => {
-            progressBar.style.width = value + "%"
-          }, 100)
-          observer.unobserve(progressBar)
+  /**
+   * Scrool with ofset on links with a class name .scrollto
+   */
+  on(
+    "click",
+    ".scrollto",
+    function (e) {
+      if (select(this.hash)) {
+        e.preventDefault()
+
+        const body = select("body")
+        if (body.classList.contains("mobile-nav-active")) {
+          body.classList.remove("mobile-nav-active")
+          const navbarToggle = select(".mobile-nav-toggle")
+          navbarToggle.classList.toggle("bi-list")
+          navbarToggle.classList.toggle("bi-x")
         }
-      })
+        scrollto(this.hash)
+      }
+    },
+    true,
+  )
+
+  /**
+   * Scroll with ofset on page load with hash links in the url
+   */
+  window.addEventListener("load", () => {
+    if (window.location.hash) {
+      if (select(window.location.hash)) {
+        scrollto(window.location.hash)
+      }
     }
+  })
 
-    const observer = new IntersectionObserver(animateProgress, {
-      threshold: 0.1,
-    })
-
-    progressBars.forEach((bar) => {
-      bar.style.width = "0%"
-      observer.observe(bar)
+  /**
+   * Hero type effect
+   */
+  const typed = select(".typed")
+  if (typed) {
+    let typed_strings = typed.getAttribute("data-typed-items")
+    typed_strings = typed_strings.split(",")
+    // Import Typed.js here
+    //For example:  import Typed from 'typed.js';
+    new Typed(".typed", {
+      strings: typed_strings,
+      loop: true,
+      typeSpeed: 100,
+      backSpeed: 50,
+      backDelay: 2000,
     })
   }
-})
+
+  /**
+   * Skills animation
+   */
+  const skilsContent = select(".skills-content")
+  if (skilsContent) {
+    new Waypoint({
+      element: skilsContent,
+      offset: "80%",
+      handler: (direction) => {
+        const progress = select(".progress .progress-bar", true)
+        progress.forEach((el) => {
+          el.style.width = el.getAttribute("aria-valuenow") + "%"
+        })
+      },
+    })
+  }
+
+  /**
+   * Animation on scroll
+   */
+  window.addEventListener("load", () => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: true,
+      mirror: false,
+    })
+  })
+})()
 
