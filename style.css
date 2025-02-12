@@ -381,11 +381,12 @@ section {
 
 #skills .progress .skill {
   font-weight: 600;
-  font-size: 16px;
+  font-size: 14px; /* کاهش اندازه فونت */
   color: #333;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
+  align-items: center; /* اضافه کردن این خط برای وسط‌چین کردن عمودی */
 }
 
 #skills .progress .progress-bar-wrap {
@@ -396,7 +397,7 @@ section {
 }
 
 #skills .progress .progress-bar {
-  height: 30px; /* افزایش ارتفاع نوار پیشرفت */
+  height: 20px; /* افزایش ارتفاع نوار پیشرفت */
   background: #ff7f50;
   border-radius: 5px;
   transition: width 0.6s ease;
@@ -408,7 +409,7 @@ section {
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 14px;
+  font-size: 12px; /* کاهش اندازه فونت درصد */
   color: #333;
 }
 
@@ -420,6 +421,11 @@ section {
 @keyframes progress-animation {
   from {
     width: 0;
+  }
+  to {
+    width: var(--progress-width);
+  }
+}
   }
   to {
     width: var(--progress-width);
