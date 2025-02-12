@@ -72,3 +72,28 @@ document.addEventListener("DOMContentLoaded", () => {
     bar.style.width = `${value}%`;
   });
 })
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Animate progress bars when they come into view
+  const progressBars = document.querySelectorAll(".progress-bar")
+  const animateProgress = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const progressBar = entry.target
+        const value = progressBar.getAttribute("aria-valuenow")
+        progressBar.style.width = value + "%"
+        observer.unobserve(progressBar)
+      }
+    })
+  }
+
+  const observer = new IntersectionObserver(animateProgress, {
+    threshold: 0.5,
+  })
+
+  progressBars.forEach((bar) => {
+    bar.style.width = "0"
+    observer.observe(bar)
+  })
+})
+
