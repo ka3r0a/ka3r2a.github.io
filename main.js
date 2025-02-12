@@ -129,8 +129,7 @@
   if (typed) {
     let typed_strings = typed.getAttribute("data-typed-items")
     typed_strings = typed_strings.split(",")
-    // Import Typed.js here
-    //For example:  import Typed from 'typed.js';
+    // Import Typed.js here.  This needs to be done in your HTML file using a script tag.  For example: <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     new Typed(".typed", {
       strings: typed_strings,
       loop: true,
@@ -156,6 +155,18 @@
       },
     })
   }
+
+  // اضافه کردن این بخش جدید برای انیمیشن skills
+  window.addEventListener("load", () => {
+    const skillsSection = select(".skills-content")
+    if (skillsSection) {
+      const progressBars = select(".progress-bar", true)
+      progressBars.forEach((progressBar) => {
+        const value = progressBar.getAttribute("aria-valuenow")
+        progressBar.style.width = value + "%"
+      })
+    }
+  })
 
   /**
    * Animation on scroll
