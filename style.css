@@ -343,91 +343,103 @@ section {
   margin-top: 10px; /* اضافه کردن فاصله بالا برای زیبایی بیشتر */
 }
 
-/* استایل برای عنوان بخش skills */
-#skills .section-title h2 {
-  font-size: 36px;
-  font-weight: 700;
-  color: #333;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  position: relative;
-  padding-bottom: 10px;
+.skills .progress {
+  height: auto;
+  display: block;
+  background: none;
+  border-radius: 0;
+  padding: 0;
+  margin-bottom: 30px;
 }
 
-#skills .section-title h2::after {
-  content: '';
+.skills .progress .skill {
+  padding: 0;
+  margin: 0 0 6px 0;
+  text-transform: uppercase;
+  display: block;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  color: #050d18;
+  font-size: 14px;
+  position: relative;
+}
+
+.skills .progress .skill .val {
+  float: right;
+  font-style: normal;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.skills .progress-bar-wrap {
+  background: #dce8f8;
+  height: 10px;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.skills .progress-bar {
+  width: 0;
+  height: 10px;
+  transition: 0.9s;
+  background-color: #149ddd;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.skills .progress:last-child {
+  margin-bottom: 0;
+}
+
+.section-bg {
+  background: #f5f8fd;
+  padding: 60px 0;
+}
+
+.section-title {
+  padding-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  color: #173b6c;
+}
+
+.section-title h2::after {
+  content: "";
   position: absolute;
   display: block;
   width: 50px;
   height: 3px;
-  background: #149ddd; /* تغییر رنگ به آبی */
+  background: #149ddd;
   bottom: 0;
-  left: 0; /* تغییر مکان به چپ */
-  transform: none; /* حذف تغییر مکان به وسط */
+  left: 0;
 }
 
-/* استایل برای توضیحات بخش skills */
-#skills .section-title p {
-  font-size: 18px;
-  color: #666;
-  margin-bottom: 40px;
+.section-title p {
+  margin-bottom: 0;
 }
 
-/* استایل برای نوارهای پیشرفت */
-#skills .progress {
-  margin-bottom: 20px;
-  position: relative;
+.skills-content {
+  padding: 20px 0;
 }
 
-#skills .progress .skill {
-  font-weight: 600;
-  font-size: 14px; /* کاهش اندازه فونت */
-  color: #333;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center; /* اضافه کردن این خط برای وسط‌چین کردن عمودی */
-}
-
-#skills .progress .progress-bar-wrap {
-  background: #f5f5f5;
-  border-radius: 5px;
-  overflow: hidden;
-  position: relative;
-}
-
-#skills .progress .progress-bar {
-  height: 20px; /* افزایش ارتفاع نوار پیشرفت */
-  background: #ff7f50;
-  border-radius: 5px;
-  transition: width 0.6s ease;
-  position: relative;
-}
-
-#skills .progress .skill .val {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px; /* کاهش اندازه فونت درصد */
-  color: #333;
-}
-
-/* افکت برای نوارهای پیشرفت */
-#skills .progress .progress-bar {
-  animation: progress-animation 2s ease-in-out forwards;
-}
-
-@keyframes progress-animation {
-  from {
-    width: 0;
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .skills .progress {
+    margin-bottom: 20px;
   }
-  to {
-    width: var(--progress-width);
+
+  .skills .progress .skill {
+    font-size: 13px;
   }
 }
-  }
-  to {
-    width: var(--progress-width);
-  }
-}
+
+
