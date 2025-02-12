@@ -383,7 +383,7 @@ section {
 .skills .progress-bar {
   width: 0;
   height: 10px;
-  transition: 0.9s;
+  transition: width 1s ease-in-out;
   background-color: #149ddd;
   position: absolute;
   left: 0;
@@ -441,5 +441,6 @@ section {
     font-size: 13px;
   }
 }
+
 
 
