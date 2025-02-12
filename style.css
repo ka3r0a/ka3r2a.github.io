@@ -307,8 +307,6 @@ section {
   animation: typing 3s steps(20) infinite;
 }
 
-/* ...existing code... */
-
 .purple-background {
   background-color: #800080; /* رنگ بنفش */
 }
@@ -316,5 +314,3 @@ section {
 .pink-text {
   color: #ff69b4; /* رنگ صورتی */
 }
-
-/* ...existing code... */
