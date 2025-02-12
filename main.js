@@ -1,16 +1,6 @@
-// Import AOS library.  Make sure you have included the AOS library in your HTML file.  For example:  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-import AOS from "aos"
-import Typed from "typed.js" // Import Typed.js
+import Typed from "typed.js"
 
 document.addEventListener("DOMContentLoaded", () => {
-  // AOS initialization
-  AOS.init({
-    duration: 1000,
-    easing: "ease-in-out",
-    once: true,
-    mirror: false,
-  })
-
   // Typed.js initialization
   new Typed(".typed", {
     strings: [
@@ -27,28 +17,37 @@ document.addEventListener("DOMContentLoaded", () => {
     backDelay: 2000,
   })
 
+  // Sidebar toggle
+  const toggleSidebarButton = document.getElementById('toggle-sidebar');
+  const sidebar = document.getElementById('header');
+
+  if (toggleSidebarButton) {
+    toggleSidebarButton.addEventListener('click', function () {
+      sidebar.classList.toggle('active');
+    });
+  }
+
+  // Close sidebar after clicking on a nav link
+  const navLinks = document.querySelectorAll('.nav-menu a');
+  navLinks.forEach((link) => {
+    link.addEventListener('click', function () {
+      sidebar.classList.remove('active');
+    });
+  });
+
   // Mobile nav toggle
   const mobileNavToggle = document.querySelector(".mobile-nav-toggle")
-  const body = document.querySelector("body")
   const header = document.querySelector("#header")
   const main = document.querySelector("#main")
 
   if (mobileNavToggle) {
     mobileNavToggle.addEventListener("click", function (e) {
-      body.classList.toggle("mobile-nav-active")
+      header.classList.toggle("mobile-nav-active")
       this.classList.toggle("bi-list")
       this.classList.toggle("bi-x")
+      main.classList.toggle("mobile-nav-active")
     })
   }
-
-  // اضافه کردن قابلیت بستن منو با کلیک خارج از آن
-  document.addEventListener("click", (e) => {
-    if (body.classList.contains("mobile-nav-active") && !header.contains(e.target) && e.target !== mobileNavToggle) {
-      body.classList.remove("mobile-nav-active")
-      mobileNavToggle.classList.add("bi-list")
-      mobileNavToggle.classList.remove("bi-x")
-    }
-  })
 
   // Smooth scroll for navigation
   const navLinks = document.querySelectorAll(".nav-menu a")
@@ -65,45 +64,4 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     })
   })
-
-  // Skills animation
-  const skillsSection = document.querySelector(".skills")
-  if (skillsSection) {
-    const progressBars = skillsSection.querySelectorAll(".progress-bar")
-    const animateProgress = () => {
-      progressBars.forEach((bar) => {
-        const value = bar.getAttribute("aria-valuenow")
-        bar.style.width = `${value}%`
-      })
-    }
-    window.addEventListener("scroll", () => {
-      const sectionPos = skillsSection.getBoundingClientRect().top
-      const screenPos = window.innerHeight / 2
-      if (sectionPos < screenPos) {
-        animateProgress()
-      }
-    })
-  }
-
-  // Back to top button
-  const backtotop = document.querySelector(".back-to-top")
-  if (backtotop) {
-    const toggleBacktotop = () => {
-      if (window.scrollY > 100) {
-        backtotop.classList.add("active")
-      } else {
-        backtotop.classList.remove("active")
-      }
-    }
-    window.addEventListener("load", toggleBacktotop)
-    document.addEventListener("scroll", toggleBacktotop)
-    backtotop.addEventListener("click", (e) => {
-      e.preventDefault()
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      })
-    })
-  }
 })
-
