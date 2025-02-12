@@ -315,3 +315,30 @@ section {
 .pink-text {
   color: #ff69b4; /* رنگ صورتی */
 }
+
+#footer .social-links {
+  margin-bottom: 20px;
+  text-align: center; /* اضافه کردن این خط برای وسط‌چین کردن لینک‌های اجتماعی */
+}
+
+#footer .social-links a {
+  font-size: 24px;
+  display: inline-block;
+  background: #fff;
+  color: #000;
+  line-height: 1;
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+#footer .social-links a:hover {
+  background: #000;
+  color: #fff;
+}
+
+#footer .copyright {
+  text-align: center; /* اضافه کردن این خط برای وسط‌چین کردن متن کپی‌رایت */
+  margin-top: 10px; /* اضافه کردن فاصله بالا برای زیبایی بیشتر */
+}
